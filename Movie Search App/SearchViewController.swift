@@ -89,13 +89,13 @@ class SearchViewController: UIViewController, UICollectionViewDataSource, UIColl
             imageCache.append(image)
         }
     }
-    
+    var titleToPass:String?
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "MovieInfoViewController", sender: indexPath.row)
+        performSegue(withIdentifier: "showMovieInfo", sender: indexPath.row)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if  segue.identifier == "MovieInfoViewSegue" {
+        if  segue.identifier == "showMovieInfo" {
             let dest = segue.destination as? MovieInfoViewController
             let movieIndex = sender as! Int
             dest!.movie = movies[movieIndex]

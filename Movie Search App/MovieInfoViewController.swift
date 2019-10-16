@@ -9,12 +9,27 @@
 import UIKit
 
 class MovieInfoViewController: UIViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        print(movie.title)
-    }
+    
     var movie:Movie!
     var movieImage:UIImage!
+    
+    var movieTitle:String?
+    
+    @IBOutlet weak var releaseYearLabel: UILabel!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = UIColor.white
+        displayMovieInfo()
+
+    }
+    
+    
+    func displayMovieInfo() {
+        releaseYearLabel.text = "Released Date: " + movie.release_date
+    }
+    
+    
     
 }
 

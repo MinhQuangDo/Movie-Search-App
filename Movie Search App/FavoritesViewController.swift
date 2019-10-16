@@ -14,5 +14,7 @@ class FavoritesViewController: UIViewController{//, UITableViewDataSource, UITab
         // Do any additional setup after loading the view.
     }
     
+    var movieTitles:[String]!
+    
     
 }
