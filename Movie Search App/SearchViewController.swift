@@ -20,11 +20,24 @@ class SearchViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange: String) {
-        fetchMovies(title: textDidChange)
-        cacheImage()
-        moviesCollectionView.reloadData()
+        spinnerView.startAnimating()
+        DispatchQueue.global(qos: .userInitiated).async {
+            if textDidChange != "" {
+                    self.fetchMovies(title: textDidChange)
+            } else {
+                self.fetchMovies(title: "A")
+            }
+            self.cacheImage()
+            
+            DispatchQueue.main.async {
+                self.moviesCollectionView.reloadData()
+                self.spinnerView.stopAnimating()
+            }
+        }
         
     }
+    
+    @IBOutlet weak var spinnerView: UIActivityIndicatorView!
     
     var movies:[Movie]!
     var imageCache:[UIImage]!
@@ -44,9 +57,7 @@ class SearchViewController: UIViewController, UICollectionViewDataSource, UIColl
         let cell = moviesCollectionView.dequeueReusableCell(withReuseIdentifier: "movieCell", for: indexPath) as! Cell
         cell.backgroundView = UIImageView(image: imageCache[indexPath.row])
         
-//        if movies.count > indexPath.row {
             cell.title.text! = movies[indexPath.row].title
-//        }
         
         return cell
     }
@@ -89,7 +100,7 @@ class SearchViewController: UIViewController, UICollectionViewDataSource, UIColl
             imageCache.append(image)
         }
     }
-    var titleToPass:String?
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         performSegue(withIdentifier: "showMovieInfo", sender: indexPath.row)
     }
