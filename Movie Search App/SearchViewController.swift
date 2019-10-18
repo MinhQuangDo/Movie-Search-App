@@ -19,14 +19,12 @@ class SearchViewController: UIViewController, UICollectionViewDataSource, UIColl
         imageCache = []
     }
     
-    func searchBar(_ searchBar: UISearchBar, textDidChange: String) {
+    @IBAction func searchClicked(_ sender: Any) {
         spinnerView.startAnimating()
+        let titleSearch = self.searchBar.text!
         DispatchQueue.global(qos: .userInitiated).async {
-            if textDidChange != "" {
-                    self.fetchMovies(title: textDidChange)
-            } else {
-                self.fetchMovies(title: "A")
-            }
+            
+            self.fetchMovies(title: titleSearch)
             self.cacheImage()
             
             DispatchQueue.main.async {
@@ -34,8 +32,21 @@ class SearchViewController: UIViewController, UICollectionViewDataSource, UIColl
                 self.spinnerView.stopAnimating()
             }
         }
-        
     }
+//    func searchBar(_ searchBar: UISearchBar, textDidChange: String) {
+//        spinnerView.startAnimating()
+//        DispatchQueue.global(qos: .userInitiated).async {
+//
+//            self.fetchMovies(title: textDidChange)
+//            self.cacheImage()
+//
+//            DispatchQueue.main.async {
+//                self.moviesCollectionView.reloadData()
+//                self.spinnerView.stopAnimating()
+//            }
+//        }
+//
+//    }
     
     @IBOutlet weak var spinnerView: UIActivityIndicatorView!
     
@@ -56,8 +67,7 @@ class SearchViewController: UIViewController, UICollectionViewDataSource, UIColl
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = moviesCollectionView.dequeueReusableCell(withReuseIdentifier: "movieCell", for: indexPath) as! Cell
         cell.backgroundView = UIImageView(image: imageCache[indexPath.row])
-        
-            cell.title.text! = movies[indexPath.row].title
+        cell.title.text! = movies[indexPath.row].title
         
         return cell
     }
@@ -72,10 +82,15 @@ class SearchViewController: UIViewController, UICollectionViewDataSource, UIColl
             movies = []
             return
         }
-        let json = try! JSONDecoder().decode(APIResults.self, from: data!)
+        let json = try? JSONDecoder().decode(APIResults.self, from: data!)
+        
+        if json == nil {
+            movies = []
+            return
+        }
         
         var movieNum:Int = 0
-        for result in json.results {
+        for result in json!.results {
             if (movieNum == 20) {
                 break
             }

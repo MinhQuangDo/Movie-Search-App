@@ -102,5 +102,16 @@ class FavoritesViewController: UIViewController, UITableViewDataSource, UITableV
         }
     }
     
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            self.favoriteMovies.remove(at: indexPath.row)
+            self.favoriteMovieTableView.deleteRows(at: [indexPath], with: .automatic)
+            
+            var favoriteMovieId = UserDefaults.standard.array(forKey: "favoriteMovieId") as! [Int]
+            favoriteMovieId.remove(at: indexPath.row)
+            UserDefaults.standard.set(favoriteMovieId, forKey:"favoriteMovieId")
+        }
+    }
+    
 }
 
