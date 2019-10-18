@@ -34,12 +34,12 @@ class MovieInfoViewController: UIViewController {
     
     
     @IBAction func addToFavoriteClicked(_ sender: Any) {
-        var favoriteMovies = UserDefaults.standard.array(forKey: "favoriteMovies") as? [String]
-        if favoriteMovies == nil {
-            favoriteMovies = []
+        var favoriteMovieId = UserDefaults.standard.array(forKey: "favoriteMovieId") as? [Int]
+        if favoriteMovieId == nil {
+            favoriteMovieId = []
         }
-        favoriteMovies!.append(movie.title)
-        UserDefaults.standard.set(favoriteMovies!, forKey:"favoriteMovies")
+        favoriteMovieId!.append(movie.id)
+        UserDefaults.standard.set(favoriteMovieId, forKey:"favoriteMovieId")
     }
     
 }

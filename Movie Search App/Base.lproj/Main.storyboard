@@ -191,15 +191,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="ABC" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xNb-6y-Moi">
-                                <rect key="frame" x="145" y="308" width="34" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="frS-pg-fVA">
-                                <rect key="frame" x="0.0" y="38" width="414" height="725"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="frS-pg-fVA">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="763"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
@@ -208,6 +201,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Delete All"/>
+                                <connections>
+                                    <action selector="deleteAllClicked:" destination="sCM-9V-bpX" eventType="touchUpInside" id="CQS-Aj-KhI"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -216,6 +212,7 @@
                     <navigationItem key="navigationItem" title="Favorite Movies" id="Fpr-jC-Hh8"/>
                     <connections>
                         <outlet property="favoriteMovieTableView" destination="frS-pg-fVA" id="myZ-dE-Ws9"/>
+                        <segue destination="OAN-XZ-qeh" kind="show" identifier="showFavoriteMovie" id="jRJ-bE-KXc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cJL-2G-ODD" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -246,4 +243,7 @@
         <image name="movie" width="25" height="25"/>
         <image name="star" width="25" height="25"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="AYv-rO-F4A"/>
+    </inferredMetricsTieBreakers>
 </document>
