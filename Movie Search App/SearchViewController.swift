@@ -33,20 +33,6 @@ class SearchViewController: UIViewController, UICollectionViewDataSource, UIColl
             }
         }
     }
-//    func searchBar(_ searchBar: UISearchBar, textDidChange: String) {
-//        spinnerView.startAnimating()
-//        DispatchQueue.global(qos: .userInitiated).async {
-//
-//            self.fetchMovies(title: textDidChange)
-//            self.cacheImage()
-//
-//            DispatchQueue.main.async {
-//                self.moviesCollectionView.reloadData()
-//                self.spinnerView.stopAnimating()
-//            }
-//        }
-//
-//    }
     
     @IBOutlet weak var spinnerView: UIActivityIndicatorView!
     
