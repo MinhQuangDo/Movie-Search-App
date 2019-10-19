@@ -293,7 +293,7 @@
         <scene sceneID="q4h-3n-6Gr">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="iCr-Rn-ses" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Setting" id="3ip-p3-SSP"/>
+                    <tabBarItem key="tabBarItem" title="Setting" image="setting" id="3ip-p3-SSP"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="vz3-bO-ieL">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -311,6 +311,7 @@
     </scenes>
     <resources>
         <image name="movie" width="25" height="25"/>
+        <image name="setting" width="25" height="25"/>
         <image name="star" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>

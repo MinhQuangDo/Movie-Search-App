@@ -68,9 +68,6 @@ class SearchViewController: UIViewController, UICollectionViewDataSource, UIColl
         }
         
         let includeAdult = UserDefaults.standard.bool(forKey: "includeAdult")
-
-        print(includeAdult)
-        
         let url = URL(string: "https://api.themoviedb.org/3/search/movie?api_key=df6faad0df8113236073718d1d9374ca&query=" + title.replacingOccurrences(of: " ", with: "%20") + "&language=" + languagePicked! + "&include_adult=" + String(includeAdult))
         let data = try? Data(contentsOf: url!)
         if (data == nil) {
