@@ -11,65 +11,54 @@ import UIKit
 class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
-        pickerBizCat.delegate = self
-        pickerBizCat.dataSource = self
+        movieLanguagePickerView.delegate = self
+        movieLanguagePickerView.dataSource = self
+        var languagePicked = UserDefaults.standard.string(forKey: "languagePicked")
+        if languagePicked == nil {
+            languagePicked = "en"
+        }
+
+        for i in 0..<languageCode.count {
+            if languageCode[i] == languagePicked! {
+                movieLanguagePickerView.selectRow(i, inComponent: 0, animated: false)
+                break
+            }
+        }
+        let includeAdult = UserDefaults.standard.bool(forKey: "includeAdult")
+        if includeAdult == false {
+            includeAdultSwitch.setOn(false, animated: false)
+        } else {
+            includeAdultSwitch.setOn(true, animated: false)
+        }
+        
     }
     
-    @IBOutlet var pickerBizCat: UIPickerView! = UIPickerView()
-    let genres = ["Any", "Action", "Adventure", "Animation", "Comedy", "Crime", "Documentary", "Horror", "Romance", "Science Fiction"]
+    @IBOutlet var movieLanguagePickerView: UIPickerView! = UIPickerView()
+    @IBOutlet weak var includeAdultSwitch: UISwitch!
     
-    let genreKeys = ["", "28", "12", "16", "35", "80", "99", "27", "10749", "878"]
+    let languages = ["English", "Spanish", "French", "German", "Chinese", "Italian"]
+    let languageCode = ["en", "es", "fr", "de", "zh", "it"]
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return genres.count
+        return languages.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return genres[row]
+        return languages[row]
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        UserDefaults.standard.set(languageCode[row], forKey:"languagePicked")
 
     }
     
+    @IBAction func changeIncludeAdult(_ sender: Any) {
+        UserDefaults.standard.set(includeAdultSwitch.isOn, forKey: "includeAdult")
+    }
 }
 
-//{
-//    "id": 28,
-//    "name": "Action"
-//},
-//{
-//    "id": 12,
-//    "name": "Adventure"
-//},
-//{
-//    "id": 16,
-//    "name": "Animation"
-//},
-//{
-//    "id": 35,
-//    "name": "Comedy"
-//},
-//{
-//    "id": 80,
-//    "name": "Crime"
-//},
-//{
-//    "id": 99,
-//    "name": "Documentary"
-//},
-//    "id": 27,
-//    "name": "Horror"
-//},
-//{
-//    "id": 10749,
-//    "name": "Romance"
-//},
-//{
-//    "id": 878,
-//    "name": "Science Fiction"
 

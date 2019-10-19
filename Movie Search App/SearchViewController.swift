@@ -62,19 +62,27 @@ class SearchViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     func fetchMovies(title: String) {
         movies = []
-        let url = URL(string: "https://api.themoviedb.org/3/search/movie?api_key=df6faad0df8113236073718d1d9374ca&query=" + title.replacingOccurrences(of: " ", with: "%20") )
+        var languagePicked = UserDefaults.standard.string(forKey: "languagePicked")
+        if languagePicked == nil {
+            languagePicked = "en"
+        }
+        
+        let includeAdult = UserDefaults.standard.bool(forKey: "includeAdult")
+
+        print(includeAdult)
+        
+        let url = URL(string: "https://api.themoviedb.org/3/search/movie?api_key=df6faad0df8113236073718d1d9374ca&query=" + title.replacingOccurrences(of: " ", with: "%20") + "&language=" + languagePicked! + "&include_adult=" + String(includeAdult))
         let data = try? Data(contentsOf: url!)
         if (data == nil) {
             movies = []
             return
         }
         let json = try? JSONDecoder().decode(APIResults.self, from: data!)
-        
         if json == nil {
             movies = []
             return
         }
-        
+    
         var movieNum:Int = 0
         for result in json!.results {
             if (movieNum == 20) {
