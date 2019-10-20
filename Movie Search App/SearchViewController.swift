@@ -34,6 +34,19 @@ class SearchViewController: UIViewController, UICollectionViewDataSource, UIColl
         }
     }
     
+    @IBAction func popularClicked(_ sender: Any) {
+        spinnerView.startAnimating()
+        DispatchQueue.global(qos: .userInitiated).async {
+            
+            self.fetchPopularMovies()
+            self.cacheImage()
+            
+            DispatchQueue.main.async {
+                self.moviesCollectionView.reloadData()
+                self.spinnerView.stopAnimating()
+            }
+        }
+    }
     @IBOutlet weak var spinnerView: UIActivityIndicatorView!
     
     var movies:[Movie]!
@@ -122,6 +135,33 @@ class SearchViewController: UIViewController, UICollectionViewDataSource, UIColl
             dest!.movie = movies[movieIndex]
             dest!.movieImage = imageCache[movieIndex]
         }
+    }
+    
+    func fetchPopularMovies() {
+        movies = []
+        let url = URL(string: "https://api.themoviedb.org/3/movie/popular?api_key=df6faad0df8113236073718d1d9374ca")
+        let data = try? Data(contentsOf: url!)
+        if (data == nil) {
+            movies = []
+            return
+        }
+        let json = try? JSONDecoder().decode(APIResults.self, from: data!)
+        if json == nil {
+            movies = []
+            return
+        }
+        
+        var movieNum:Int = 0
+        for result in json!.results {
+            if (movieNum == 20) {
+                break
+            }
+            else {
+                movies.append(result)
+                movieNum += 1
+            }
+        }
+        
     }
     
 
