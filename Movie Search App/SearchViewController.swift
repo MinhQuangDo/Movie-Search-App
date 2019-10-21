@@ -20,6 +20,8 @@ class SearchViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
     
     @IBAction func searchClicked(_ sender: Any) {
+        movies = []
+        self.moviesCollectionView.reloadData()
         spinnerView.startAnimating()
         let titleSearch = self.searchBar.text!
         DispatchQueue.global(qos: .userInitiated).async {
@@ -35,6 +37,8 @@ class SearchViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
     
     @IBAction func popularClicked(_ sender: Any) {
+        movies = []
+        self.moviesCollectionView.reloadData()
         spinnerView.startAnimating()
         DispatchQueue.global(qos: .userInitiated).async {
             
