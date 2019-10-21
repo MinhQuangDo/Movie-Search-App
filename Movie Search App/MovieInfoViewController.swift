@@ -20,8 +20,6 @@ class MovieInfoViewController: UIViewController {
     @IBOutlet weak var addToFavoriteButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.white
-        displayMovieInfo()
         let favoriteMovieId = UserDefaults.standard.array(forKey: "favoriteMovieId") as? [Int]
         if favoriteMovieId != nil {
             for id in favoriteMovieId! {
@@ -31,6 +29,8 @@ class MovieInfoViewController: UIViewController {
                 }
             }
         }
+        fetchImage()
+        displayMovieInfo()
     }
     
     
@@ -50,7 +50,31 @@ class MovieInfoViewController: UIViewController {
         }
         favoriteMovieId!.append(movie.id)
         UserDefaults.standard.set(favoriteMovieId, forKey:"favoriteMovieId")
+        
+        var favoriteMovieLanguage = UserDefaults.standard.array(forKey: "favoriteMovieLanguage") as? [String]
+        if favoriteMovieLanguage == nil {
+            favoriteMovieLanguage = []
+        }
+        favoriteMovieLanguage!.append(movie.language!)
+        UserDefaults.standard.set(favoriteMovieLanguage, forKey:"favoriteMovieLanguage")
+        
         addToFavoriteButton.isEnabled = false
+    }
+    
+    //higher resolution
+    func fetchImage() {
+        if movie.poster_path == nil {
+            movieImage = UIImage(named: "question_mark.png")!
+            return
+        }
+        let url = URL(string: "https://image.tmdb.org/t/p/w342/" + movie.poster_path!)
+        let data = try? Data(contentsOf: url!)
+        if data == nil {
+            movieImage = UIImage(named: "question_mark.png")!
+            return
+        }
+        movieImage = UIImage(data: data!)!
+        
     }
     
 }

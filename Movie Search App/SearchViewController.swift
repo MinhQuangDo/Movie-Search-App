@@ -104,6 +104,7 @@ class SearchViewController: UIViewController, UICollectionViewDataSource, UIColl
             }
             else {
                 movies.append(result)
+                movies[movieNum].language = languagePicked!
                 movieNum += 1
             }
         }
@@ -137,7 +138,7 @@ class SearchViewController: UIViewController, UICollectionViewDataSource, UIColl
             let dest = segue.destination as? MovieInfoViewController
             let movieIndex = sender as! Int
             dest!.movie = movies[movieIndex]
-            dest!.movieImage = imageCache[movieIndex]
+//            dest!.movieImage = imageCache[movieIndex]
         }
     }
     
@@ -162,6 +163,7 @@ class SearchViewController: UIViewController, UICollectionViewDataSource, UIColl
             }
             else {
                 movies.append(result)
+                movies[movieNum].language = "en"
                 movieNum += 1
             }
         }

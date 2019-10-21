@@ -31,7 +31,12 @@ class FavoritesViewController: UIViewController, UITableViewDataSource, UITableV
                 favoriteMovieId = []
             }
             
-            self.fetchMovieById(ids: favoriteMovieId!)
+            var favoriteMovieLanguage = UserDefaults.standard.array(forKey: "favoriteMovieLanguage") as? [String]
+            if favoriteMovieLanguage == nil {
+                favoriteMovieLanguage = []
+            }
+            
+            self.fetchMovieById(ids: favoriteMovieId!, languages: favoriteMovieLanguage!)
             self.cacheImage()
             
             DispatchQueue.main.async {
@@ -51,17 +56,12 @@ class FavoritesViewController: UIViewController, UITableViewDataSource, UITableV
         return myCell
     }
     
+
     
-    @IBAction func deleteAllClicked(_ sender: Any) {
+    func fetchMovieById (ids: [Int], languages: [String]) {
         favoriteMovies = []
-        favoriteMovieTableView.reloadData()
-        UserDefaults.standard.set([], forKey:"favoriteMovieId")
-    }
-    
-    func fetchMovieById (ids: [Int]) {
-        favoriteMovies = []
-        for id in ids {
-            let url = URL(string: "https://api.themoviedb.org/3/movie/" + String(id) + "?api_key=df6faad0df8113236073718d1d9374ca&query=")
+        for i in 0..<ids.count {
+            let url = URL(string: "https://api.themoviedb.org/3/movie/" + String(ids[i]) + "?api_key=df6faad0df8113236073718d1d9374ca&" + "language=" + String(languages[i]))
             let data = try? Data(contentsOf: url!)
             if (data == nil) {
                 return
@@ -105,11 +105,16 @@ class FavoritesViewController: UIViewController, UITableViewDataSource, UITableV
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             self.favoriteMovies.remove(at: indexPath.row)
+            self.imageCache.remove(at: indexPath.row)
             self.favoriteMovieTableView.deleteRows(at: [indexPath], with: .automatic)
             
             var favoriteMovieId = UserDefaults.standard.array(forKey: "favoriteMovieId") as! [Int]
             favoriteMovieId.remove(at: indexPath.row)
             UserDefaults.standard.set(favoriteMovieId, forKey:"favoriteMovieId")
+            
+            var favoriteMovieLanguage = UserDefaults.standard.array(forKey: "favoriteMovieLanguage") as! [String]
+            favoriteMovieLanguage.remove(at: indexPath.row)
+            UserDefaults.standard.set(favoriteMovieLanguage, forKey:"favoriteMovieLanguage")
         }
     }
     
