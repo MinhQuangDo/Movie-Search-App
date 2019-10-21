@@ -17,10 +17,20 @@ class MovieInfoViewController: UIViewController {
     @IBOutlet weak var posterImage: UIImageView!
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var overviewLabel: UILabel!
+    @IBOutlet weak var addToFavoriteButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
         displayMovieInfo()
+        let favoriteMovieId = UserDefaults.standard.array(forKey: "favoriteMovieId") as? [Int]
+        if favoriteMovieId != nil {
+            for id in favoriteMovieId! {
+                if id == movie.id {
+                    addToFavoriteButton.isEnabled = false
+                    break
+                }
+            }
+        }
     }
     
     
@@ -40,6 +50,7 @@ class MovieInfoViewController: UIViewController {
         }
         favoriteMovieId!.append(movie.id)
         UserDefaults.standard.set(favoriteMovieId, forKey:"favoriteMovieId")
+        addToFavoriteButton.isEnabled = false
     }
     
 }
